@@ -44,20 +44,38 @@ function del(taskName) {
 
 /**
  *
+ * @param {object} task
+ * @returns {boolean} 完了したかどうか
+ */
+function isDone(task) {
+  return task.state;
+}
+
+/**
+ *
+ * @param {object} task
+ * @returns {boolean} 未完了かどうか
+ */
+function isNotDone(task) {
+  return !isDone(task);
+}
+
+/**
+ *
  * 未完了のタスクを返す
- * @return 未完了のtaskName
+ * @return {array} 未完了のtaskName
  */
 function list() {
-  return taskManageArray.filter((task) => !task.state).map((task) => task.name);
+  return taskManageArray.filter(isNotDone).map((task) => task.name);
 }
 
 /**
  *
  * 完了のタスクを返す
- * @return 未完了のtaskName
+ * @return {string} 未完了のtaskName
  */
 function doneList() {
-  return taskManageArray.filter((task) => task.state).map((task) => task.name);
+  return taskManageArray.filter(isDone).map((task) => task.name);
 }
 
 module.exports = {
