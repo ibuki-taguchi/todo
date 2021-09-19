@@ -5,6 +5,7 @@ let taskManageArray = [];
 const fs = require("fs");
 const filename = "./tasks.json";
 
+// ファイル読み込み
 try {
   const data = fs.readFileSync(filename, "utf8");
   taskManageArray = JSON.parse(data);
