@@ -1,7 +1,23 @@
 "use strict";
 
 // { name: タスクの文字列, state: 完了しているかどうかの真偽値 }
-const taskManageArray = [];
+let taskManageArray = [];
+const fs = require("fs");
+const filename = "./tasks.json";
+
+try {
+  const data = fs.readFileSync(filename, "utf8");
+  taskManageArray = JSON.parse(data);
+} catch (ignore) {
+  console.log(filename + "から復元できませんでした");
+}
+/**
+ *
+ * ファイル書き出し
+ */
+function saveTasks() {
+  fs.writeFileSync(filename, JSON.stringify(taskManageArray), "utf8");
+}
 
 /**
  * タスクの追加
@@ -11,6 +27,7 @@ const taskManageArray = [];
 
 function add(taskName) {
   taskManageArray.push({ name: taskName, state: false });
+  saveTasks();
 }
 
 /**
@@ -25,6 +42,7 @@ function done(taskName) {
   );
   if (indexFound !== -1) {
     taskManageArray[indexFound].state = true;
+    saveTasks();
   }
 }
 
@@ -39,6 +57,7 @@ function del(taskName) {
   );
   if (indexFound !== -1) {
     taskManageArray.splice(indexFound, 1);
+    saveTasks();
   }
 }
 
