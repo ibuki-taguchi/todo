@@ -1,21 +1,26 @@
 "use strict";
-const todo = require("./index.js");
-const assert = require("assert");
+const fs = require("fs");
 
-// addとlistのテスト
-todo.add("ノートを買う");
-todo.add("鉛筆を買う");
-assert.deepStrictEqual(todo.list(), ["ノートを買う", "鉛筆を買う"]);
+// タスクデータを削除してからテスト実行
+fs.unlink("./tasks.json", (err) => {
+  const todo = require("./index.js");
+  const assert = require("assert");
 
-// doneとdonelistのテスト
-todo.done("鉛筆を買う");
-assert.deepStrictEqual(todo.list(), ["ノートを買う"]);
-assert.deepStrictEqual(todo.doneList(), ["鉛筆を買う"]);
+  // addとlistのテスト
+  todo.add("ノートを買う");
+  todo.add("鉛筆を買う");
+  assert.deepStrictEqual(todo.list(), ["ノートを買う", "鉛筆を買う"]);
 
-// delのテスト
-todo.del("ノートを買う");
-todo.del("鉛筆を買う");
-assert.deepStrictEqual(todo.list(), []);
-assert.deepStrictEqual(todo.doneList(), []);
+  // doneとdonelistのテスト
+  todo.done("鉛筆を買う");
+  assert.deepStrictEqual(todo.list(), ["ノートを買う"]);
+  assert.deepStrictEqual(todo.doneList(), ["鉛筆を買う"]);
 
-console.log("test done");
+  // delのテスト
+  todo.del("ノートを買う");
+  todo.del("鉛筆を買う");
+  assert.deepStrictEqual(todo.list(), []);
+  assert.deepStrictEqual(todo.doneList(), []);
+
+  console.log("test done");
+});
